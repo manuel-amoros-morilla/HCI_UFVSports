@@ -1,0 +1,542 @@
+#########################################################
+PROMPT 1   (ChatGPT vs.GPT-6)
+#########################################################
+Attatched ( hand written specifications, hand drawn prototype navigation flow, document created for part 1)
+Quiero que me generes un prompt para una aplicación de Figma que vaya en acorde con este documento y el prototipo dibujado. 
+visualmente deberá tener un aspecto relacionado con la universidad Francisco de Vitoria. Deberia estar muy claro cuales son los tasks.
+
+#########################################################
+PROMPT 2   (passed to Claude vs.Opus 5.5 with Figma connectors) using Chatgpt vs.GPT-6
+#########################################################
+
+
+Quiero crear esto con Figma: # UFVSports — Mobile Application Design Prompt
+### Universidad Francisco de Vitoria (UFV)
+
+## 1. Project Overview
+
+Design and generate a high-fidelity, interactive mobile application called **UFVSports**, intended for students of Universidad Francisco de Vitoria (UFV), Madrid, Spain.
+
+The application allows students to:
+- Access the university gym using a QR code.
+- Book sports facilities.
+- View their personal reservations.
+- Explore and book sports activities.
+- Check gym occupancy.
+- Manage their personal profile.
+
+Create a complete, functional mobile prototype with all screens, navigation flows, and interactive elements.
+
+The design must be professional, modern, intuitive, and clearly connected to the visual identity of Universidad Francisco de Vitoria.
+
+Do not rely on external documents or previously uploaded files. All requirements are explicitly defined below.
+
+---
+
+# 2. Visual Identity and UI Design
+
+### Brand Identity
+
+The application must visually reflect Universidad Francisco de Vitoria.
+
+Use an institutional, elegant, and modern visual style inspired by the university's identity.
+
+### Color Palette
+- Primary UFV Blue: #003B71
+- Secondary Blue: #005A9C
+- White: #FFFFFF
+- Light Gray: #F4F6F8
+- Dark Gray: #263238
+- Success Green: #2E7D32
+- Error Red: #C62828
+- Warning Orange: #ED8B00
+
+Use blue as the primary color for buttons, navigation, and highlights.
+
+### Design Style
+- Modern and minimalist.
+- Clean and premium sports-app aesthetic.
+- Rounded cards (12–16 px radius).
+- Clear visual hierarchy.
+- Consistent iconography.
+- Subtle shadows.
+- Generous spacing.
+- High-quality sports photography.
+- Accessible typography.
+- Mobile-first design.
+
+Use Inter or a similar modern sans-serif typeface.
+
+Create the application using a 390 × 844 px mobile frame.
+
+---
+
+# 3. MAIN NAVIGATION — HOME SCREEN
+
+The Home screen must contain exactly four main options.
+
+These four options must be the most prominent elements of the interface.
+
+## Main Menu
+
+QR — Gym Access
+Reservations
+Occupancy
+My Profile
+
+Use a clean 2 × 2 card layout or another visually balanced arrangement.
+
+Each option must have:
+- A recognizable icon.
+- A clear title.
+- A short description.
+- A large clickable area.
+
+### Home Screen Layout
+
+Top section:
+- UFV logo.
+- UFVSports title.
+- Personalized greeting: "Welcome, Student!"
+
+Main section:
+- QR — Gym Access.
+- Reservations.
+- Occupancy.
+- My Profile.
+
+Bottom section:
+- Optional university sports-related information.
+- Minimal and clean layout.
+
+IMPORTANT:
+The Home screen must only have these four main navigation options. Do not add Activities as a separate main menu item. Activities must be accessed through Reservations.
+
+---
+
+# 4. RESERVATIONS SECTION
+
+The Reservations section is the main booking hub of the application.
+
+When the user clicks "Reservations" on the Home screen, they must first see a list of all sports and booking categories.
+
+## Screen: Sports & Reservations Menu
+
+Display the following options in this exact order:
+
+My Reservations
+Padel
+Tennis
+Football
+Basketball
+Activities
+
+"My Reservations" must always be the first option.
+
+Each option should be displayed as a visually distinct card with an icon and title.
+
+The Activities option must be visually recognizable as a category containing multiple classes.
+
+Do not display Activities directly on the Home screen.
+
+---
+
+# 5. MY RESERVATIONS
+
+When the user selects "My Reservations", display all their existing bookings.
+
+Each reservation card must include:
+- Sport or activity name.
+- Date.
+- Time.
+- Facility or location.
+- Reservation status.
+
+Each card must have two actions:
+- Modify Reservation.
+- Cancel Reservation.
+
+### Modify Reservation Flow
+
+My Reservations → Select Reservation → Modify → Select New Date → Select New Time → Confirm Changes → Success Screen.
+
+### Cancel Reservation Flow
+
+My Reservations → Select Reservation → Cancel → Confirmation Modal → Confirm Cancellation → Updated My Reservations.
+
+Use a red color for destructive actions and a clear confirmation dialog.
+
+---
+
+# 6. SPORTS BOOKING FLOWS
+
+When the user selects a sport from the Sports & Reservations Menu, display the corresponding booking interface.
+
+Sports:
+- Padel.
+- Tennis.
+- Football.
+- Basketball.
+
+Each sport must have a dedicated booking flow.
+
+### Booking Flow
+
+Sports & Reservations Menu → Select Sport → Select Facility → Select Date → View Availability → Select Time Slot → Review Booking → Confirm Booking → Booking Confirmation.
+
+### Booking Screen
+
+Include:
+- Sport name.
+- Facility selection.
+- Calendar.
+- Available time slots.
+- Selected date.
+- Selected time.
+- Booking summary.
+- Confirm Booking button.
+
+### Time Slot States
+
+Clearly differentiate:
+- Available.
+- Selected.
+- Occupied.
+- Unavailable.
+
+Use visual states, not only color, to distinguish time slots.
+
+---
+
+# 7. ACTIVITIES SECTION
+
+The Activities option is located inside the Sports & Reservations Menu.
+
+When the user clicks Activities, navigate to a separate page titled:
+
+"Sports Activities"
+
+This page must contain exactly four activity options:
+
+Pilates
+Spinning
+CrossFit
+Brazilian Jiu-Jitsu
+
+Use four visually attractive cards.
+
+Each activity card must include:
+- Activity image.
+- Activity name.
+- Short description.
+- Schedule.
+- Price.
+- Available spots.
+- View Activity button.
+
+The page should use a grid or vertical card layout depending on screen size.
+
+Do not place these four activities directly inside the main Home screen.
+
+## Activity Detail Screen
+
+When the user selects an activity, display:
+- Activity name.
+- Large activity image.
+- Description.
+- Schedule.
+- Location.
+- Price.
+- Available spots.
+- Book Activity button.
+
+## Activity Booking Flow
+
+Reservations → Sports & Reservations Menu → Activities → Select Activity → Activity Details → Select Schedule → Confirm Booking → Booking Success.
+
+### Activity Confirmation
+
+Display:
+- Success icon.
+- "You have successfully booked this activity!"
+- Activity name.
+- Date and time.
+- Location.
+- View My Reservations button.
+- Back to Home button.
+
+---
+
+# 8. QR — GYM ACCESS
+
+QR — Gym Access is one of the four main Home options.
+
+When selected, open a dedicated Gym Access screen.
+
+### Gym Access Screen
+
+Include:
+- Title: "Gym Access".
+- Large QR code centered on the screen.
+- Message: "Scan this QR code at the entrance to access the gym."
+- Access status.
+- Back button.
+
+The QR code must be the main visual element.
+
+### QR Access States
+
+Create the following states:
+
+QR Ready.
+Access Granted.
+QR Invalid.
+Location Permission Required.
+Connection Error.
+
+Each error state must provide a clear explanation and a recovery action.
+
+Use realistic placeholder QR functionality for the prototype.
+
+---
+
+# 9. OCCUPANCY
+
+Occupancy is one of the four main Home options.
+
+When selected, open a dedicated Gym Occupancy screen.
+
+### Occupancy Screen
+
+Include:
+- Current gym occupancy percentage.
+- Visual occupancy indicator.
+- Current status: Low, Medium, or High.
+- Gym opening hours.
+- Peak hours.
+- Estimated occupancy throughout the day.
+
+Use a clear visual representation such as a progress bar or simple chart.
+
+The user must be able to understand gym occupancy at a glance.
+
+Use sample data for prototype purposes.
+
+---
+
+# 10. MY PROFILE
+
+My Profile is one of the four main Home options.
+
+When selected, open the user's profile page.
+
+### Profile Screen
+
+Include:
+- User profile photo or avatar.
+- Student name.
+- University email.
+- Basic account information.
+- My Reservations shortcut.
+- My Activities shortcut.
+- Account Settings.
+- Accessibility Settings.
+- Log Out.
+
+Use a clean and organized layout.
+
+---
+
+# 11. TASK FLOWS
+
+The application must support the following eight user tasks.
+
+Each task must be implemented as a complete and independently testable interaction flow.
+
+Create a separate Figma section called "TASK FLOWS".
+
+## TASK 01 — Access the Gym Using QR
+Priority: CRITICAL
+
+Objective: Access the university gym through a QR code.
+
+Flow:
+Home → QR — Gym Access → QR Code → Validate Access → Access Granted.
+
+Include error states and recovery.
+
+## TASK 02 — Book a Sports Facility
+Priority: CRITICAL
+
+Objective: Book a sports facility.
+
+Flow:
+Home → Reservations → Sports & Reservations Menu → Select Sport → Select Facility → Select Date → Select Time → Confirm Booking → Booking Success.
+
+## TASK 03 — View My Reservations
+Priority: CRITICAL
+
+Objective: View all personal bookings.
+
+Flow:
+Home → Reservations → My Reservations → View Reservation Details.
+
+## TASK 04 — Modify or Cancel a Reservation
+Priority: CRITICAL
+
+Objective: Change or cancel an existing booking.
+
+Modify Flow:
+Home → Reservations → My Reservations → Select Reservation → Modify → Select New Date and Time → Confirm Changes.
+
+Cancel Flow:
+Home → Reservations → My Reservations → Select Reservation → Cancel → Confirm Cancellation.
+
+## TASK 05 — Book a Sports Activity
+Priority: CRITICAL
+
+Objective: Register for a university sports activity.
+
+Flow:
+Home → Reservations → Sports & Reservations Menu → Activities → Select Activity → View Details → Select Schedule → Confirm Booking → Booking Success.
+
+Activities:
+- Pilates.
+- Spinning.
+- CrossFit.
+- Brazilian Jiu-Jitsu.
+
+## TASK 06 — Check Gym Occupancy
+Priority: IMPORTANT
+
+Objective: View gym occupancy and opening hours.
+
+Flow:
+Home → Occupancy → View Current Occupancy → View Peak Hours → View Opening Hours.
+
+## TASK 07 — Log In
+Priority: IMPORTANT
+
+Objective: Access the application using university credentials.
+
+Flow:
+Login → Enter Credentials → Remember Me → Log In → Home.
+
+## TASK 08 — Manage Personal Profile
+Priority: IMPORTANT
+
+Objective: View and manage personal information.
+
+Flow:
+Home → My Profile → View Profile → Account Settings.
+
+---
+
+# 12. TASK ORGANIZATION IN FIGMA
+
+Create a page called "TASK OVERVIEW".
+
+Display all eight tasks as clearly separated cards.
+
+Each task card must include:
+- Task ID.
+- Task Name.
+- Objective.
+- Priority.
+- Start Screen.
+- End Screen.
+
+Use priority labels:
+- Critical: Red.
+- Important: Orange.
+- Supporting: Blue.
+
+Create another page called "TASK FLOWS".
+
+Each task must be represented by a horizontal flow of screens connected by arrows.
+
+Every flow must:
+- Have a clearly visible task title.
+- Display its task ID.
+- Show its priority.
+- Start from the correct screen.
+- Include all intermediate screens.
+- End at a clearly defined completion state.
+- Include alternative flows when relevant.
+
+This task organization is for the Figma project presentation and must not appear inside the final user-facing mobile application.
+
+---
+
+# 13. FIGMA PROTOTYPE INTERACTIONS
+
+Create a fully connected interactive prototype.
+
+Implement:
+- Home navigation.
+- Reservations navigation.
+- Sports selection.
+- Activities selection.
+- Calendar selection.
+- Time slot selection.
+- Booking confirmation.
+- Reservation modification.
+- Reservation cancellation.
+- QR access navigation.
+- Occupancy navigation.
+- Profile navigation.
+- Activity registration.
+- Success and error modals.
+
+Every major task must be fully testable from start to finish.
+
+Use:
+- Smart Animate.
+- Interactive components.
+- Overlays.
+- Button states.
+- Reusable components.
+- Auto Layout.
+
+---
+
+# 14. FIGMA FILE ORGANIZATION
+
+Create the following pages:
+
+PAGE 01 — DESIGN SYSTEM
+Colors, typography, buttons, icons, cards, inputs, navigation, and component variants.
+
+PAGE 02 — APP SCREENS
+All application screens, organized by section.
+
+PAGE 03 — TASK OVERVIEW
+Visual overview of all eight tasks.
+
+PAGE 04 — TASK FLOWS
+Independent task flows with navigation arrows.
+
+PAGE 05 — INTERACTIVE PROTOTYPE
+Fully connected final prototype.
+
+---
+
+# 15. FINAL REQUIREMENTS
+
+The final application must:
+
+Be visually connected to Universidad Francisco de Vitoria.
+Have exactly four main Home options: QR — Gym Access, Reservations, Occupancy, and My Profile.
+Place Activities inside Reservations.
+Display My Reservations as the first option in the Sports & Reservations Menu.
+Display sports booking options after My Reservations.
+Include an Activities page with exactly four activities: Pilates, Spinning, CrossFit, and Brazilian Jiu-Jitsu.
+Include all described screens.
+Include all eight user tasks.
+Provide complete and functional navigation flows.
+Be visually polished and consistent.
+Be easy to present in an academic evaluation.
+
+Prioritize the exact navigation structure, task clarity, usability, and high-fidelity visual quality.
+
+Generate the complete mobile application, not just a Home screen or a static mockup.
