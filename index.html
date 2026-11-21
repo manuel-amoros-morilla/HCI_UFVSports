@@ -1,0 +1,516 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>UFVSports</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: a 390x844 phone running the app, with a prototype guide beside it (stacked below on narrow screens). */
+:root{
+  --bg:#F4F6F8; --surface:#FFFFFF; --fg:#263238; --muted:#566872;
+  --primary:#003B71; --primary-2:#005A9C; --on-primary:#FFFFFF; --link:#005A9C;
+  --tint:#E6EEF6; --border:#D5DDE3;
+  --ok:#2E7D32; --ok-tint:#E4F2E5; --err:#C62828; --err-tint:#FBE9E9;
+  --warn:#ED8B00; --warn-text:#A15C00; --warn-tint:#FDF0DC; --disabled:#8FA0AA;
+  --stage:#E3E9EE; --shadow:0 4px 16px rgba(0,59,113,.10);
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0E1A24; --surface:#16252F; --fg:#E8EEF2; --muted:#9FB1BC;
+  --primary:#2F7FC8; --primary-2:#4C9BE0; --on-primary:#FFFFFF; --link:#7DB8EE;
+  --tint:#1B3347; --border:#2A3E4C;
+  --ok:#6CC070; --ok-tint:#18331C; --err:#F0716F; --err-tint:#3A1B1B;
+  --warn:#F2A33A; --warn-text:#F2A33A; --warn-tint:#3A2C12; --disabled:#6B7F8B;
+  --stage:#0A1219; --shadow:0 4px 16px rgba(0,0,0,.35); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1A24; --surface:#16252F; --fg:#E8EEF2; --muted:#9FB1BC;
+  --primary:#2F7FC8; --primary-2:#4C9BE0; --on-primary:#FFFFFF; --link:#7DB8EE;
+  --tint:#1B3347; --border:#2A3E4C;
+  --ok:#6CC070; --ok-tint:#18331C; --err:#F0716F; --err-tint:#3A1B1B;
+  --warn:#F2A33A; --warn-text:#F2A33A; --warn-tint:#3A2C12; --disabled:#6B7F8B;
+  --stage:#0A1219; --shadow:0 4px 16px rgba(0,0,0,.35); color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--stage);color:var(--fg);font-family:var(--font);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:16px}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0;text-align:inherit}
+:focus-visible{outline:3px solid var(--primary-2);outline-offset:2px}
+h1,h2,h3,p{margin:0}
+.stage{display:flex;gap:32px;justify-content:center;align-items:flex-start;flex-wrap:wrap;min-height:100%}
+.phone{position:relative;width:min(390px,100%);height:min(844px,calc(100dvh - 32px));min-height:600px;background:var(--bg);border-radius:32px;overflow:hidden;box-shadow:0 0 0 1px var(--border),0 24px 60px rgba(0,20,40,.25);font-size:14px;flex:none}
+.phone.large{font-size:16.5px}
+.phone.contrast{--muted:var(--fg);--border:var(--fg)}
+.phone.calm *{transition:none!important;animation:none!important}
+#app,.scr{height:100%}
+.scr{display:flex;flex-direction:column}
+.hd{display:flex;align-items:center;gap:8px;padding:18px 16px 8px}
+.hd h1{flex:1;text-align:center;font-size:1.25em;font-weight:600;padding-right:40px;outline:none}
+.back{width:40px;height:40px;border-radius:50%;background:var(--surface);display:grid;place-items:center;color:var(--primary);box-shadow:0 0 0 1px var(--border)}
+.bd{flex:1;overflow-y:auto;padding:8px 24px 20px;display:flex;flex-direction:column;gap:14px}
+.ft{padding:12px 24px 20px;display:flex;flex-direction:column;gap:10px;background:var(--surface);border-top:1px solid var(--border)}
+.ic{flex:none;display:block}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 20px;border-radius:12px;font-weight:600;font-size:1.05em;text-align:center;border:1.5px solid transparent;width:100%}
+.btn.p{background:var(--primary);color:var(--on-primary)}
+.btn.p:active{background:var(--primary-2)}
+.btn.s{background:var(--tint);color:var(--link)}
+.btn.o{border-color:var(--primary-2);color:var(--link)}
+.btn.d{background:var(--err);color:#fff}
+.btn.do{border-color:var(--err);color:var(--err)}
+.btn[disabled]{background:var(--border);color:var(--disabled);border-color:transparent;cursor:not-allowed}
+.btn.sm{min-height:38px;font-size:.95em;width:auto;padding:0 14px}
+.card{background:var(--surface);border-radius:16px;box-shadow:var(--shadow);padding:16px}
+.muted{color:var(--muted)}
+.small{font-size:.85em}
+.row{display:flex;align-items:center;gap:12px}
+.grow{flex:1;min-width:0}
+.tile{width:44px;height:44px;border-radius:12px;background:var(--tint);color:var(--link);display:grid;place-items:center;flex:none}
+.tile.dark{background:var(--primary);color:var(--on-primary)}
+.pill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:999px;font-size:.8em;font-weight:600;white-space:nowrap}
+.pill.ok{background:var(--ok-tint);color:var(--ok)}
+.pill.warn{background:var(--warn-tint);color:var(--warn-text)}
+.pill.err{background:var(--err-tint);color:var(--err)}
+.pill.info{background:var(--tint);color:var(--link)}
+.pill.gray{background:var(--border);color:var(--muted)}
+.logo{width:52px;height:52px;border-radius:13px;background:var(--primary);color:var(--on-primary);display:grid;place-items:center;font-weight:700;font-size:1.2em;letter-spacing:.02em}
+/* login */
+.login{padding:48px 24px 24px;gap:18px}
+.field label{display:block;font-size:.85em;font-weight:500;color:var(--muted);margin-bottom:6px}
+.inp{display:flex;align-items:center;gap:10px;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:0 14px;min-height:52px;color:var(--muted)}
+.inp:focus-within{border-color:var(--primary-2);box-shadow:0 0 0 3px var(--tint)}
+.inp input{flex:1;min-width:0;border:0;background:none;font:inherit;color:var(--fg);outline:none;min-height:48px}
+.chk{display:flex;align-items:center;gap:10px}
+.box{width:24px;height:24px;border-radius:7px;border:2px solid var(--disabled);display:grid;place-items:center;background:var(--surface);color:#fff}
+.box.on{background:var(--primary);border-color:var(--primary)}
+.err-msg{display:flex;gap:8px;align-items:center;color:var(--err);background:var(--err-tint);padding:10px 12px;border-radius:12px;font-size:.9em}
+/* home */
+.greet h2{font-size:1.9em;font-weight:700;line-height:1.15}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hcard{background:var(--surface);border-radius:16px;box-shadow:var(--shadow);padding:16px;display:flex;flex-direction:column;gap:10px;min-height:176px;text-align:left}
+.hcard h3{font-size:1.1em;font-weight:600;line-height:1.2}
+.hcard .tile{width:52px;height:52px;border-radius:14px}
+.hcard:active,.mrow:active,.fac:active{transform:scale(.98)}
+.news{display:flex;gap:12px;align-items:center;background:var(--tint);border-radius:16px;padding:14px;color:var(--fg)}
+/* menu rows */
+.mrow{display:flex;align-items:center;gap:14px;width:100%;background:var(--surface);border-radius:16px;box-shadow:var(--shadow);padding:14px 16px;min-height:72px}
+.mrow.cat{box-shadow:0 0 0 1.5px var(--primary-2),var(--shadow)}
+.mrow h3{font-size:1.05em;font-weight:600}
+/* reservation card */
+.res .top{display:flex;align-items:center;gap:12px;width:100%}
+.res .meta{display:flex;flex-direction:column;gap:7px;margin:12px 0 14px;padding-top:12px;border-top:1px solid var(--border)}
+.res .meta div{display:flex;gap:10px;align-items:center;color:var(--fg)}
+.res .meta svg{color:var(--muted)}
+.res .acts{display:flex;gap:10px}
+.res .acts .btn{flex:1;min-height:44px}
+/* calendar */
+.cal{background:var(--surface);border-radius:16px;box-shadow:var(--shadow);padding:12px}
+.cal .mh{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.cal .mh button{width:36px;height:36px;display:grid;place-items:center;border-radius:50%;color:var(--link)}
+.cal .mh button[disabled]{color:var(--disabled)}
+.cal .g{display:grid;grid-template-columns:repeat(7,1fr);gap:4px 0;text-align:center}
+.cal .wd{font-size:.72em;font-weight:600;color:var(--muted);padding:4px 0}
+.day{width:min(40px,100%);aspect-ratio:1;justify-self:center;border-radius:50%;display:grid;place-items:center;font-weight:500;font-variant-numeric:tabular-nums}
+.day.past{color:var(--disabled)}
+.day.full{color:var(--muted);text-decoration:line-through;cursor:not-allowed}
+.day.today{box-shadow:inset 0 0 0 1.5px var(--primary-2)}
+.day.sel{background:var(--primary);color:var(--on-primary);font-weight:700}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--ok)}
+.dot.ring{background:none;border:1.5px solid var(--warn)}
+.dash{width:8px;height:2px;background:var(--muted)}
+.day.sel .dot{background:#fff;border-color:#fff}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.78em;color:var(--muted);align-items:center}
+.legend span{display:flex;gap:5px;align-items:center}
+/* slots */
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.slot{min-height:48px;border-radius:12px;display:flex;gap:6px;align-items:center;justify-content:center;font-weight:600;border:1.5px solid var(--primary-2);color:var(--link);background:var(--surface);font-variant-numeric:tabular-nums}
+.slot.sel{background:var(--primary);border-color:var(--primary);color:var(--on-primary)}
+.slot.occ{background:var(--bg);border:1.5px solid var(--border);color:var(--muted);text-decoration:line-through;cursor:not-allowed}
+.slot.una{border:1.5px dashed var(--disabled);color:var(--disabled);background:none;cursor:not-allowed}
+.sw{display:inline-block;width:14px;height:14px;border-radius:4px}
+/* summary */
+.sum{display:flex;flex-direction:column;gap:12px}
+.sum div{display:flex;justify-content:space-between;gap:16px;align-items:baseline}
+.sum div span:first-child{color:var(--muted)}
+.sum div span:last-child{font-weight:600;text-align:right}
+.note{display:flex;gap:10px;background:var(--tint);color:var(--fg);padding:14px;border-radius:14px;font-size:.9em}
+.note svg{color:var(--link)}
+/* facility */
+.fac{display:flex;gap:14px;align-items:center;width:100%;background:var(--surface);border-radius:16px;box-shadow:var(--shadow);padding:12px}
+.fac[disabled]{opacity:.65;cursor:not-allowed}
+.cover{position:relative;overflow:hidden;color:#fff;background:linear-gradient(135deg,#003B71,#005A9C);display:grid;place-items:center;flex:none;border-radius:12px}
+.cover::before,.cover::after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.08)}
+.cover::before{width:70%;aspect-ratio:1;right:-20%;top:-20%}
+.cover::after{width:50%;aspect-ratio:1;left:-15%;bottom:-18%}
+.cover svg{opacity:.55;position:relative;z-index:1}
+.cover.a1{background:linear-gradient(135deg,#003B71,#2B7BBE)}
+.cover.a2{background:linear-gradient(160deg,#00294F,#005A9C)}
+.cover.a3{background:linear-gradient(120deg,#0A3D6E,#1E6FB0)}
+.cover.a4{background:linear-gradient(200deg,#002A52,#3B87C6)}
+/* success */
+.ok-ic{width:96px;height:96px;border-radius:50%;background:var(--ok-tint);color:var(--ok);display:grid;place-items:center;margin:0 auto}
+.center{text-align:center}
+.opt{display:flex;gap:12px;align-items:center;background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:14px;width:100%}
+.opt.on{background:var(--tint);border-color:var(--primary-2)}
+.radio{width:22px;height:22px;border-radius:50%;border:2px solid var(--disabled);display:grid;place-items:center;flex:none}
+.opt.on .radio{border-color:var(--primary)}
+.opt.on .radio::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--primary)}
+.det{display:flex;flex-direction:column;gap:10px;background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:14px}
+.det div{display:flex;gap:10px;align-items:center}
+.det div span:nth-child(2){color:var(--muted);font-size:.9em}
+.det div span:last-child{margin-left:auto;font-weight:600;text-align:right}
+/* qr */
+.qrbox{background:#fff;border-radius:20px;padding:18px;box-shadow:var(--shadow);width:min(290px,100%);margin:0 auto;position:relative}
+.qrbox svg{display:block;width:100%;height:auto}
+.qrbox.dim svg{opacity:.18}
+.status{display:flex;align-items:center;justify-content:center;gap:8px;font-weight:600;padding:10px 14px;border-radius:999px;width:max-content;margin:0 auto}
+.spin{width:22px;height:22px;border-radius:50%;border:3px solid var(--tint);border-top-color:var(--primary);animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.big-ic{width:96px;height:96px;border-radius:50%;display:grid;place-items:center;margin:0 auto}
+/* occupancy */
+.ring{position:relative;width:180px;height:180px;margin:0 auto}
+.ring .n{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.ring .n b{font-size:2.8em;line-height:1;font-variant-numeric:tabular-nums}
+.chart{display:flex;align-items:flex-end;gap:4px;height:120px;padding-top:8px}
+.chart .b{flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;min-width:0}
+.chart .bar{border-radius:5px 5px 2px 2px;background:var(--primary-2);opacity:.55}
+.chart .bar.hi{opacity:1;background:var(--err)}
+.chart .bar.now{opacity:1;background:var(--primary);box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--primary)}
+.chart .bar.pk{opacity:1;background:var(--warn-text)}
+.axis{display:flex;gap:4px;font-size:.68em;color:var(--muted);margin-top:6px;font-variant-numeric:tabular-nums}
+.axis span{flex:1;text-align:center;min-width:0}
+/* profile */
+.avatar{width:84px;height:84px;border-radius:50%;background:var(--primary);color:var(--on-primary);display:grid;place-items:center;font-size:1.9em;font-weight:700;margin:0 auto}
+.list{background:var(--surface);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.li{display:flex;align-items:center;gap:14px;width:100%;padding:14px 16px;min-height:56px}
+.li+.li{border-top:1px solid var(--border)}
+.li .tile{width:36px;height:36px;border-radius:10px}
+.li.danger{color:var(--err)}
+.li.danger .tile{background:var(--err-tint);color:var(--err)}
+.sw-t{width:48px;height:28px;border-radius:999px;background:var(--disabled);position:relative;flex:none}
+.sw-t::after{content:"";position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:left .15s}
+.sw-t.on{background:var(--primary)}
+.sw-t.on::after{left:23px}
+/* overlay & toast */
+#overlay{position:absolute;inset:0;background:rgba(0,20,40,.55);display:none;align-items:center;justify-content:center;padding:24px;z-index:5}
+#overlay.show{display:flex}
+.modal{background:var(--surface);border-radius:20px;padding:24px;width:100%;display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.4)}
+.toast{position:absolute;left:24px;right:24px;bottom:28px;z-index:6;background:#263238;color:#fff;border-radius:14px;padding:14px 16px;display:flex;gap:10px;align-items:center;font-weight:500}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .toast{background:#E8EEF2;color:#0E1A24}}
+:root[data-theme="dark"] .toast{background:#E8EEF2;color:#0E1A24}
+/* guide panel */
+.panel{width:min(340px,100%);background:var(--surface);border-radius:20px;padding:20px;box-shadow:0 0 0 1px var(--border);display:flex;flex-direction:column;gap:14px;flex:none}
+.panel h2{font-size:1.1em}
+.panel .t{display:flex;gap:10px;align-items:center;width:100%;padding:10px 12px;border-radius:12px;border:1px solid var(--border);min-height:48px}
+.panel .t:hover{border-color:var(--primary-2);background:var(--tint)}
+.panel .t b{font-size:.78em;color:var(--muted);width:2.6em;flex:none}
+.panel .t span.n{flex:1;font-size:.92em;font-weight:500}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--border);border-radius:999px;padding:7px 12px;font-size:.82em;font-weight:500;min-height:34px}
+.chip:hover{background:var(--tint);border-color:var(--primary-2)}
+.panel .small{color:var(--muted);line-height:1.45}
+@media (max-width:760px){.panel{order:2}}
+</style>
+
+<main class="stage">
+  <div class="phone" id="phone"><div id="app"></div><div id="overlay" role="dialog" aria-modal="true"></div><div id="toast"></div></div>
+  <aside class="panel" aria-label="Prototype guide">
+    <div><h2>Prototype guide</h2><p class="small">This panel sits outside the app. Use it to jump to the start of each task and to force the QR states that are hard to reach on their own.</p></div>
+    <div id="tasks" style="display:flex;flex-direction:column;gap:6px"></div>
+    <div><h2 style="font-size:.95em;margin-bottom:8px">Simulate the gate at the gym entrance</h2>
+      <div class="chips" id="sim"></div></div>
+    <button class="chip" data-a="resetproto" style="align-self:flex-start">Reset prototype data</button>
+  </aside>
+</main>
+
+<script>
+const $=s=>document.querySelector(s);
+const I={
+qr:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM21 14v3M14 21h3M21 21h0"/>',
+calendar:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+calcheck:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4"/>',
+gauge:'<path d="M12 14l4-4"/><path d="M3.3 19a10 10 0 1 1 17.4 0"/>',
+user:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+users:'<circle cx="9" cy="8" r="4"/><path d="M1 21a8 8 0 0 1 16 0M17 4a4 4 0 0 1 0 8M23 21a8 8 0 0 0-5-7"/>',
+left:'<path d="m15 18-6-6 6-6"/>',right:'<path d="m9 18 6-6-6-6"/>',
+check:'<path d="M20 6 9 17l-5-5"/>',x:'<path d="M18 6 6 18M6 6l12 12"/>',
+clock:'<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+pin:'<path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/>',
+padel:'<ellipse cx="9.5" cy="9.5" rx="6" ry="7.5" transform="rotate(-45 9.5 9.5)"/><path d="M14 14l6 6M6.5 8.5l4 4M9 6l5 5"/><circle cx="19" cy="5" r="1.6"/>',
+tennis:'<circle cx="12" cy="12" r="10"/><path d="M5 5c4 3 4 11 0 14M19 5c-4 3-4 11 0 14"/>',
+football:'<circle cx="12" cy="12" r="10"/><path d="m12 8 4 3-1.5 5h-5L8 11zM12 8V2M16 11l6-2M14.5 16l3.5 5M9.5 16 6 21M8 11 2 9"/>',
+basketball:'<circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20M5 5c4 3 4 11 0 14M19 5c-4 3-4 11 0 14"/>',
+dumbbell:'<path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/>',
+settings:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/>',
+access:'<circle cx="12" cy="4" r="2"/><path d="M4 8h16M12 8v14M8 22l4-7 4 7"/>',
+logout:'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>',
+wifioff:'<path d="M2 8.8a15 15 0 0 1 4-2.4M22 8.8a15 15 0 0 0-8-3.7M5 12.9a10 10 0 0 1 5-2.7M19 12.9a10 10 0 0 0-2-1.6M8.5 16.4a5 5 0 0 1 7 0M12 20h.01M2 2l20 20"/>',
+alert:'<path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/>',
+lock:'<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+mail:'<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/>',
+info:'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>',
+bike:'<circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M12 17.5V14l-3-3 4-3 2 3h2M15 5h.01"/>',
+pilates:'<circle cx="12" cy="5" r="2"/><path d="M4 21c2-6 5-8 8-8s6 2 8 8M12 7v6"/>',
+shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+trash:'<path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v6M14 11v6"/>',
+refresh:'<path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5"/>',
+locoff:'<path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0zM3 3l18 18"/>',
+trophy:'<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/>',
+bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10 21a2 2 0 0 0 4 0"/>',
+id:'<path d="M4 4h16v16H4zM8 9h8M8 13h5"/>',
+sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"/>',
+text:'<path d="M4 7V4h16v3M9 20h6M12 4v16"/>',
+motion:'<path d="M3 12h4l3-8 4 16 3-8h4"/>'
+};
+const ic=(n,s=20)=>`<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I[n]}</svg>`;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pad=n=>String(n).padStart(2,'0');
+const hash=str=>{let x=2166136261;for(const c of str){x^=c.charCodeAt(0);x=Math.imul(x,16777619)}return (x>>>0)%100};
+const dk=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const NOW=new Date(),TODAY=dk(NOW);
+const addDays=n=>dk(new Date(NOW.getFullYear(),NOW.getMonth(),NOW.getDate()+n));
+const nextMon=()=>addDays((8-NOW.getDay())%7||7);
+const fmt=k=>{const [y,m,d]=k.split('-').map(Number);return new Date(y,m-1,d).toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'})};
+const TIMES=['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00'];
+const rng=t=>`${t} – ${pad(parseInt(t)+1)}:00`;
+
+const SPORTS={
+ Padel:{ic:'padel',fac:[['Court 1','Indoor · glass walls · 4 players',5],['Court 2','Outdoor · panoramic · 4 players',3],['Court 3','Indoor · premium surface',0]]},
+ Tennis:{ic:'tennis',fac:[['Court A','Outdoor · clay',4],['Court B','Indoor · hard court',6],['Court C','Outdoor · hard · floodlit',2]]},
+ Football:{ic:'football',fac:[['Pitch 1','5-a-side · artificial turf',3],['Pitch 2','7-a-side · artificial turf',2],['Main Field','11-a-side · natural grass',0]]},
+ Basketball:{ic:'basketball',fac:[['Indoor Court 1','Full court · wooden floor',5],['Indoor Court 2','Half court · wooden floor',4],['Outdoor Court','Full court · floodlit',1]]}
+};
+const ACTS=[
+ {n:'Pilates',ic:'pilates',cv:'a1',sd:'Core strength & flexibility',sch:'Mon & Wed · 18:00–19:00',loc:'Studio 2',pr:'€20 / month',sp:8,ld:'A low-impact class focused on core stability, posture and mobility. Suitable for all levels and led by a certified instructor.',opts:[['Mon & Wed','18:00 – 19:00',8],['Tue & Thu','12:30 – 13:30',5],['Fri','09:00 – 10:00',10]]},
+ {n:'Spinning',ic:'bike',cv:'a2',sd:'High-energy indoor cycling',sch:'Tue & Thu · 19:00–20:00',loc:'Spinning Room',pr:'€25 / month',sp:4,ld:'Rhythm-based indoor cycling to build endurance. Bikes adjust to every height and level.',opts:[['Tue & Thu','19:00 – 20:00',4],['Mon & Wed','08:00 – 09:00',9],['Sat','10:00 – 11:00',12]]},
+ {n:'CrossFit',ic:'dumbbell',cv:'a3',sd:'Functional strength & conditioning',sch:'Mon, Wed & Fri · 07:30–08:30',loc:'Functional Area',pr:'€30 / month',sp:12,ld:'Varied, high-intensity workouts that combine weightlifting, gymnastics and cardio. Every session scales to your level.',opts:[['Mon, Wed & Fri','07:30 – 08:30',12],['Tue & Thu','18:00 – 19:00',7],['Sat','11:00 – 12:30',6]]},
+ {n:'Brazilian Jiu-Jitsu',ic:'shield',cv:'a4',sd:'Grappling & self-defence',sch:'Tue & Thu · 20:00–21:30',loc:'Combat Room',pr:'€30 / month',sp:6,ld:'Learn ground technique, positional control and submissions in a safe, respectful environment. Gi provided for beginners.',opts:[['Tue & Thu','20:00 – 21:30',6],['Mon & Wed','19:30 – 21:00',8],['Sat','12:30 – 14:00',10]]}
+];
+const BASE_RES=()=>[
+ {id:'r1',kind:'sport',name:'Padel',ic:'padel',fac:'Court 2',date:addDays(1),time:'18:00',loc:'Court 2 · UFV Sports Center',status:'Confirmed'},
+ {id:'r2',kind:'activity',name:'Pilates',ic:'pilates',fac:'Studio 2',date:nextMon(),time:'18:00 – 19:00',loc:'Studio 2 · UFV Sports Center',status:'Confirmed'},
+ {id:'r3',kind:'sport',name:'Basketball',ic:'basketball',fac:'Indoor Court 1',date:addDays(6),time:'11:00',loc:'Indoor Court 1 · UFV Sports Center',status:'Pending'}
+];
+const OCC=[18,32,41,38,44,52,48,40,63,82,91,88,70,45,24]; // 07:00..21:00 sample data
+const NOW_IDX=8;
+
+const fresh=()=>({user:false,stack:['login'],res:BASE_RES(),d:{},mod:null,sel:null,m:0,qr:'ready',overlay:null,sched:0,act:null,remember:false,f:{email:'',pass:''},err:'',
+  a11y:{large:false,contrast:false,calm:false},acc:{name:'María García',phone:'+34 600 123 456',notif:true},nid:10,spots:ACTS.map(a=>a.sp),last:null});
+let S=fresh();
+
+/* ---------- helpers ---------- */
+const badge=s=>s==='Confirmed'?`<span class="pill ok">${ic('check',12)}Confirmed</span>`:`<span class="pill warn">${ic('clock',12)}Pending</span>`;
+const level=k=>{if(k<TODAY)return'past';const v=hash('d'+k);return v<14?'full':v<34?'limited':'open'};
+const slotState=(sport,fac,date,i)=>{if(date===TODAY&&parseInt(TIMES[i])<=NOW.getHours())return'una';const v=hash(sport+fac+date+i);return v<12?'una':v<40?'occ':'avail'};
+const hdr=(t,back='back')=>`<header class="hd"><button class="back" data-a="${back}" aria-label="Back">${ic('left',22)}</button><h1 tabindex="-1">${t}</h1></header>`;
+const scr=(o)=>`<div class="scr" style="${o.bg?'background:var(--'+o.bg+')':''}">${o.hd??''}<main class="bd">${o.body}</main>${o.ft?`<footer class="ft">${o.ft}</footer>`:''}</div>`;
+const btn=(cls,label,a,v='',dis=false,extra='')=>`<button class="btn ${cls}" data-a="${a}" data-v="${v}" ${dis?'disabled':''} ${extra}>${label}</button>`;
+const cover=(w,h,icon,cv='a1',r=12)=>`<div class="cover ${cv}" style="width:${w}px;height:${h}px;border-radius:${r}px" role="img" aria-label="${icon} cover">${ic(icon,Math.round(Math.min(w,h)*.5))}</div>`;
+const summ=rows=>`<div class="card sum">${rows.map(([a,b])=>`<div><span>${a}</span><span>${b}</span></div>`).join('')}</div>`;
+const cal=(sel)=>{
+  const first=new Date(NOW.getFullYear(),NOW.getMonth()+S.m,1),start=(first.getDay()+6)%7,days=new Date(first.getFullYear(),first.getMonth()+1,0).getDate();
+  const y=first.getFullYear(),mo=first.getMonth()+1;let cells='';
+  for(let i=0;i<start;i++)cells+='<div></div>';
+  for(let d=1;d<=days;d++){
+    const k=`${y}-${pad(mo)}-${pad(d)}`,lv=level(k),isSel=k===sel;
+    const mark='';
+    const dis=lv==='past'||lv==='full';
+    const lab=`${fmt(k)}${lv==='full'?', fully booked':lv==='limited'?', few slots left':lv==='open'?', available':''}`;
+    cells+=`<button class="day ${lv} ${k===TODAY?'today':''} ${isSel?'sel':''}" ${dis?'disabled':''} data-a="pickdate" data-v="${k}" aria-label="${lab}" ${isSel?'aria-pressed="true"':''}>${d}${mark}</button>`;
+  }
+  return `<div class="cal"><div class="mh"><button data-a="month" data-v="-1" aria-label="Previous month" ${S.m===0?'disabled':''}>${ic('left',20)}</button><b>${first.toLocaleString('en-GB',{month:'long',year:'numeric'})}</b><button data-a="month" data-v="1" aria-label="Next month" ${S.m===1?'disabled':''}>${ic('right',20)}</button></div>
+  <div class="g">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(w=>`<div class="wd">${w}</div>`).join('')}${cells}</div></div>
+  <p class="muted small" style="text-align:center">Struck-through days are fully booked.</p>`;
+};
+const slots=(sport,fac,date,selT)=>{
+  const g=TIMES.map((t,i)=>{const st=selT===t?'sel':slotState(sport,fac,date,i);
+    if(st==='sel')return `<button class="slot sel" data-a="pickslot" data-v="${t}" aria-pressed="true" aria-label="${t}, selected">${ic('check',16)}${t}</button>`;
+    if(st==='occ')return `<button class="slot occ" disabled aria-label="${t}, occupied">${ic('lock',15)}${t}</button>`;
+    if(st==='una')return `<button class="slot una" disabled aria-label="${t}, unavailable">${ic('x',15)}${t}</button>`;
+    return `<button class="slot" data-a="pickslot" data-v="${t}" aria-label="${t}, available">${t}</button>`}).join('');
+  return `<div class="slots">${g}</div><div class="legend"><span><i class="sw" style="border:1.5px solid var(--primary-2)"></i>Available</span><span><i class="sw" style="background:var(--primary)"></i>Selected</span><span><i class="sw" style="background:var(--bg);border:1.5px solid var(--border)"></i>Occupied</span><span><i class="sw" style="border:1.5px dashed var(--disabled)"></i>Unavailable</span></div>`;
+};
+const success=(title,sub,rows,primary)=>scr({body:`<div style="height:12px"></div><div class="ok-ic">${ic('check',48)}</div><h1 class="center" tabindex="-1" style="font-size:1.6em;outline:none">${title}</h1>${sub?`<p class="muted center">${sub}</p>`:''}${summ(rows)}`,
+  ft:btn('p','View My Reservations','toRes')+btn('o','Back to Home','home')});
+const qrSvg=()=>{
+  const N=25;let seed=2166136261;for(const c of 'UFV-20481-'+TODAY){seed^=c.charCodeAt(0);seed=Math.imul(seed,16777619)}
+  const rnd=()=>{seed^=seed<<13;seed^=seed>>>17;seed^=seed<<5;return ((seed>>>0)%1000)/1000};
+  const fin=(x,y)=>(x<8&&y<8)||(x>=N-8&&y<8)||(x<8&&y>=N-8);
+  let p='';
+  for(let y=0;y<N;y++)for(let x=0;x<N;x++){
+    let on;
+    if(fin(x,y)){const lx=x<8?x:x-(N-8),ly=y<8?y:y-(N-8);
+      on=lx<7&&ly<7&&(lx===0||lx===6||ly===0||ly===6||(lx>=2&&lx<=4&&ly>=2&&ly<=4));}
+    else on=rnd()>.52;
+    if(on)p+=`M${x} ${y}h1v1h-1z`;
+  }
+  return `<svg viewBox="-1 -1 ${N+2} ${N+2}" role="img" aria-label="Gym access QR code"><path d="${p}" fill="#0b1b27"/></svg>`;
+};
+
+/* ---------- screens ---------- */
+const SCREENS={
+login(){return scr({body:`<div class="login" style="display:flex;flex-direction:column;gap:18px;padding:30px 0 0">
+  <div class="center" style="display:flex;flex-direction:column;gap:8px;align-items:center"><div class="logo" style="width:72px;height:72px;font-size:1.7em;border-radius:18px">UFV</div><h1 tabindex="-1" style="font-size:1.9em;color:var(--link);outline:none">UFVSports</h1><p class="muted">Sign in with your university credentials</p></div>
+  ${S.err?`<div class="err-msg" role="alert">${ic('alert',18)}${S.err}</div>`:''}
+  <div class="field"><label for="email">University email</label><div class="inp">${ic('mail')}<input id="email" type="email" autocomplete="username" placeholder="name@ufv.es" value="${esc(S.f.email)}"></div></div>
+  <div class="field"><label for="pass">Password</label><div class="inp">${ic('lock')}<input id="pass" type="password" autocomplete="current-password" placeholder="Enter your password" value="${esc(S.f.pass)}"></div></div>
+  <div class="row" style="justify-content:space-between"><button class="chk" data-a="remember" role="checkbox" aria-checked="${S.remember}"><span class="box ${S.remember?'on':''}">${S.remember?ic('check',15):''}</span>Remember me</button><button data-a="demo" style="color:var(--link);font-weight:500">Use demo account</button></div>
+  ${btn('p','Log In','login')}
+  <p class="muted small center">Use your UFV account. Need help? Contact IT Support.</p></div>`,bg:'surface'})},
+home(){return scr({bg:'bg',body:`
+  <div class="row" style="padding-top:12px"><div class="logo">UFV</div><div><h1 style="font-size:1.45em;color:var(--link);font-weight:700">UFVSports</h1><p class="muted small">Universidad Francisco de Vitoria</p></div></div>
+  <div class="greet"><h2>Welcome, Student!</h2><p class="muted" style="margin-top:4px">What would you like to do today?</p></div>
+  <div class="grid2">
+   ${[['qr','QR — Gym Access','Show your QR code to enter the gym','qr'],['calcheck','Reservations','Book courts and classes, manage bookings','menu'],['gauge','Occupancy','See how busy the gym is right now','occ'],['user','My Profile','Your account, settings and activity','profile']].map(([i,t,d,a])=>`<button class="hcard" data-a="${a==='qr'?'openqr':'go'}" data-v="${a}"><span class="tile">${ic(i,28)}</span><h3>${t}</h3><span class="muted small">${d}</span></button>`).join('')}
+  </div>
+  <div class="news">${ic('trophy',24)}<div><b class="small">This week at UFV Sports</b><p class="small muted">Intramural 5-a-side league · Fri 18:00 · Pitch 1</p></div></div>`})},
+menu(){const rows=[['calcheck','My Reservations','View, modify or cancel your bookings','myres',0],['padel','Padel','3 courts · indoor & outdoor','Padel',0],['tennis','Tennis','3 courts · clay & hard','Tennis',0],['football','Football','5, 7 and 11-a-side pitches','Football',0],['basketball','Basketball','Indoor and outdoor courts','Basketball',0],['dumbbell','Activities','Pilates, Spinning, CrossFit, BJJ','acts',1]];
+  return scr({bg:'bg',hd:hdr('Reservations'),body:`<p class="muted">My bookings and sports</p>`+rows.map(([i,t,s,a,c])=>`<button class="mrow ${c?'cat':''}" data-a="${SPORTS[a]?'sport':a==='myres'?'go':'go'}" data-v="${a}"><span class="tile ${c?'dark':''}">${ic(i,24)}</span><span class="grow"><h3>${t}</h3><span class="muted small">${s}</span></span>${c?'<span class="pill info">4 classes</span>':''}<span class="muted">${ic('right')}</span></button>`).join('')})},
+myres(){const L=[...S.res].sort((a,b)=>a.date.localeCompare(b.date));
+  return scr({bg:'bg',hd:hdr('My Reservations'),body:L.length?`<p class="muted">${L.length} upcoming booking${L.length>1?'s':''}</p>`+L.map(r=>`<article class="card res"><button class="top" data-a="resdetail" data-v="${r.id}" aria-label="View details for ${r.name}"><span class="tile">${ic(r.ic,24)}</span><b class="grow" style="font-size:1.1em">${r.name}</b>${badge(r.status)}</button>
+   <div class="meta"><div>${ic('calendar',16)}${fmt(r.date)}</div><div>${ic('clock',16)}${r.kind==='sport'?rng(r.time):r.time}</div><div>${ic('pin',16)}${r.loc}</div></div>
+   <div class="acts">${btn('s','Modify','modify',r.id,false,`aria-label="Modify reservation ${r.name}"`)}${btn('do','Cancel','cancelask',r.id,false,`aria-label="Cancel reservation ${r.name}"`)}</div></article>`).join(''):`<div class="card center" style="padding:32px 20px;display:flex;flex-direction:column;gap:10px;align-items:center"><span class="tile">${ic('calendar',24)}</span><h3>No bookings yet</h3><p class="muted">Book a court or join an activity from Reservations.</p>${btn('p','Book now','back')}</div>`})},
+resdetail(){const r=S.res.find(x=>x.id===S.sel);if(!r)return SCREENS.myres();
+  return scr({bg:'bg',hd:hdr('Reservation Details'),body:`<article class="card"><div class="row"><span class="tile">${ic(r.ic,24)}</span><b class="grow" style="font-size:1.15em">${r.name}</b>${badge(r.status)}</div></article>
+   ${summ([['Date',fmt(r.date)],['Time',r.kind==='sport'?rng(r.time):r.time],['Location',r.loc],['Reservation ID','UFV-'+(20480+parseInt(r.id.slice(1)))],['Cancellation','Free until 2 h before']])}
+   <p class="muted small">Bring your student card and sports shoes. Arrive 10 minutes early.</p>`,
+   ft:btn('p','Modify Reservation','modify',r.id)+btn('do','Cancel Reservation','cancelask',r.id)})},
+moddate(){const r=S.res.find(x=>x.id===S.mod.id);
+  return scr({hd:hdr('Modify Reservation'),body:`<div class="note">${ic('info',20)}<div><span class="muted small">Current booking</span><br><b>${r.name} · ${fmt(r.date)} · ${r.kind==='sport'?r.time:r.time.slice(0,5)}</b></div></div><h2 style="font-size:1.15em">Select a new date</h2>${cal(S.mod.date)}`,
+   ft:btn('p','Continue','modnext','',!S.mod.date)})},
+modtime(){const r=S.res.find(x=>x.id===S.mod.id);
+  return scr({hd:hdr('Modify Reservation'),body:`<div class="row" style="color:var(--link);font-weight:600">${ic('calendar',20)}${fmt(S.mod.date)}</div><h2 style="font-size:1.15em">Select a new time</h2>${slots(r.name,r.fac,S.mod.date,S.mod.time)}${S.mod.time?summ([['New date',fmt(S.mod.date)],['New time',rng(S.mod.time)],['Facility',r.fac]]):''}`,
+   ft:btn('p','Confirm Changes','modconfirm','',!S.mod.time)})},
+modsuccess(){const r=S.res.find(x=>x.id===S.mod.id);return success('Reservation updated!','Your booking has been changed successfully.',[[r.name,r.fac],['Date',fmt(r.date)],['Time',r.kind==='sport'?rng(r.time):r.time]])},
+fac(){const sp=SPORTS[S.d.sport];return scr({bg:'bg',hd:hdr('Book '+S.d.sport),body:`<p class="muted small">Step 1 of 4 · Choose a facility</p>`+sp.fac.map(([n,d,av])=>`<button class="fac" data-a="fac" data-v="${n}" ${av?'':'disabled'}>${cover(84,84,sp.ic)}<span class="grow"><b style="font-size:1.05em">${n}</b><br><span class="muted small">${d}</span><br><span class="pill ${av?'ok':'gray'}" style="margin-top:6px">${av?ic('check',12)+av+' slots left':ic('lock',12)+'Fully booked'}</span></span>${av?`<span class="muted">${ic('right')}</span>`:''}</button>`).join('')})},
+date(){return scr({hd:hdr('Book '+S.d.sport),body:`<p class="muted small">Step 2 of 4 · Select a date</p><div class="note" style="align-items:center">${ic(SPORTS[S.d.sport].ic,20)}<b>${S.d.fac}</b></div>${cal(S.d.date)}`,ft:btn('p','View Availability','tovail','',!S.d.date)})},
+time(){return scr({hd:hdr('Book '+S.d.sport),body:`<p class="muted small">Step 3 of 4 · Select a time slot</p><div class="row" style="color:var(--link);font-weight:600;flex-wrap:wrap">${ic('calendar',18)}${fmt(S.d.date)}<span class="muted">·</span>${S.d.fac}</div>${slots(S.d.sport,S.d.fac,S.d.date,S.d.time)}${S.d.time?summ([['Selected date',fmt(S.d.date)],['Selected time',rng(S.d.time)]]):''}`,ft:btn('p','Review Booking','review','',!S.d.time)})},
+review(){return scr({bg:'bg',hd:hdr('Review Booking'),body:`<p class="muted small">Step 4 of 4 · Check your booking</p>${summ([['Sport',S.d.sport],['Facility',S.d.fac],['Date',fmt(S.d.date)],['Time',rng(S.d.time)],['Duration','1 hour'],['Price','Free for UFV students']])}<div class="note">${ic('info',20)}<span>Free cancellation up to 2 hours before your booking.</span></div>`,ft:btn('p','Confirm Booking','confirmbook')+btn('o','Edit selection','back')})},
+bsuccess(){const d=S.last;return success('Booking confirmed!','Your reservation is ready. See you there!',[['Sport',d.name],['Facility',d.fac],['Date',fmt(d.date)],['Time',rng(d.time)]])},
+acts(){return scr({bg:'bg',hd:hdr('Sports Activities'),body:ACTS.map((a,i)=>`<article class="card" style="padding:12px"><div class="row" style="align-items:flex-start">${cover(96,150,a.ic,a.cv)}<div class="grow" style="display:flex;flex-direction:column;gap:6px"><h3 style="font-size:1.1em">${a.n}</h3><span class="muted small">${a.sd}</span><span class="row small" style="gap:6px;align-items:flex-start">${ic('clock',14)}${a.sch}</span><div class="row" style="gap:8px;flex-wrap:wrap"><b style="color:var(--link)">${a.pr}</b>${S.spots[i]<=5?`<span class="pill warn">${ic('users',12)}${S.spots[i]} spots left</span>`:`<span class="pill ok">${ic('users',12)}${S.spots[i]} spots left</span>`}</div>${btn('s sm','View Activity','actview',i,false,`aria-label="View ${a.n}"`)}</div></div></article>`).join('')})},
+actdet(){const a=ACTS[S.act],sp=S.spots[S.act];return scr({hd:hdr(a.n),body:`${cover(342,190,a.ic,a.cv,16).replace('style="width:342px','style="width:100%;max-width:342px')}
+  <div class="row" style="justify-content:space-between"><h2 style="font-size:1.5em">${a.n}</h2><span class="pill ${sp<=5?'warn':'ok'}">${ic('users',12)}${sp} spots left</span></div>
+  <p class="muted">${a.ld}</p><div class="det"><div>${ic('clock',16)}<span>Schedule</span><span>${a.sch}</span></div><div>${ic('pin',16)}<span>Location</span><span>${a.loc} · UFV Sports Center</span></div><div>${ic('trophy',16)}<span>Price</span><span>${a.pr}</span></div><div>${ic('users',16)}<span>Available spots</span><span>${sp}</span></div></div>`,ft:btn('p','Book Activity','actbook')})},
+actsched(){const a=ACTS[S.act];return scr({bg:'bg',hd:hdr('Select Schedule'),body:`<h2 style="font-size:1.1em">Choose your class time for ${a.n}</h2>`+a.opts.map((o,i)=>`<button class="opt ${S.sched===i?'on':''}" data-a="actopt" data-v="${i}" role="radio" aria-checked="${S.sched===i}"><span class="radio"></span><span class="grow"><b>${o[0]}</b><br><span class="muted small">${o[1]}</span></span><span class="pill ${o[2]<=5?'warn':'ok'}">${o[2]} spots</span></button>`).join('')+`<p class="muted small">Classes start the week of ${fmt(nextMon())}.</p>`,ft:btn('p','Continue','actnext')})},
+actconf(){const a=ACTS[S.act],o=a.opts[S.sched];return scr({bg:'bg',hd:hdr('Confirm Booking'),body:`${summ([['Activity',a.n],['Schedule',o[0]+' · '+o[1]],['Starts',fmt(nextMon())],['Location',a.loc],['Price',a.pr]])}<div class="note">${ic('info',20)}<span>You can cancel your place from My Reservations at any time.</span></div>`,ft:btn('p','Confirm Booking','actconfirm')+btn('o','Change schedule','back')})},
+asuccess(){const d=S.last;return success('You have successfully booked this activity!','',[['Activity',d.name],['Date & time',fmt(d.date)+' · '+d.time],['Location',d.fac]])},
+qr(){const st=S.qr;let inner='',stat='',ft='';
+  const big=(cls,icn,t,p)=>`<div class="big-ic" style="background:var(--${cls}-tint);color:var(--${cls})">${ic(icn,48)}</div><h2 class="center" style="font-size:1.4em">${t}</h2><p class="muted center">${p}</p>`;
+  if(st==='ready'||st==='checking'){inner=`<div class="qrbox ${st==='checking'?'dim':''}">${qrSvg()}</div>
+    <p class="center" style="font-size:1.05em">Scan this QR code at the entrance to access the gym.</p>
+    <div class="status" style="background:${st==='checking'?'var(--tint)':'var(--ok-tint)'};color:${st==='checking'?'var(--link)':'var(--ok)'}" role="status">${st==='checking'?'<i class="spin"></i>Validating access…':ic('check',18)+'QR ready · valid for 5 minutes'}</div>`;
+    ft=btn('p','Validate Access','qrvalidate','',st==='checking');}
+  else if(st==='granted'){inner=big('ok','check','Access granted','Welcome, María. The turnstile is open.')+summ([['Entry',new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})],['Facility','UFV Gym'],['Member','Student · UFV-20481']]);ft=btn('p','Done','home');}
+  else if(st==='invalid'){inner=big('err','x','QR code invalid','This code has expired or was already used. Generate a new one to continue.');ft=btn('p',ic('refresh',18)+'Generate new QR','qrnew')+btn('o','Contact gym desk','back');}
+  else if(st==='location'){inner=big('warn','locoff','Location permission required','UFVSports checks that you are at the gym before it shows your code. Turn on location access to continue.');ft=btn('p','Enable location','qrnew')+btn('o','Not now','back');}
+  else {inner=big('err','wifioff','Connection error','We could not reach the access server. Check your Wi-Fi or mobile data and try again.');ft=btn('p',ic('refresh',18)+'Try again','qrnew')+btn('o','Back to Home','home');}
+  return scr({bg:'bg',hd:hdr('Gym Access'),body:`<div style="display:flex;flex-direction:column;gap:16px;padding-top:6px">${inner}</div>`,ft})},
+occ(){const v=OCC[NOW_IDX],lv=v<40?['Low','ok','check']:v<70?['Medium','warn','alert']:['High','err','alert'];
+  const r=76,c=2*Math.PI*r;
+  const bars=OCC.map((x,i)=>{const h=7+i,pk=h>=17&&h<=19;return `<div class="b" title="${pad(h)}:00 · ${x}%"><div class="bar ${i===NOW_IDX?'now':pk?'pk':''}" style="height:${x}%"></div></div>`}).join('');
+  const axis=OCC.map((x,i)=>`<span>${(7+i)%2===1?pad(7+i):''}</span>`).join('');
+  return scr({bg:'bg',hd:hdr('Gym Occupancy'),body:`<article class="card center" style="display:flex;flex-direction:column;gap:14px;align-items:center"><div class="ring"><svg viewBox="0 0 180 180" width="180" height="180" role="img" aria-label="${v}% occupancy"><circle cx="90" cy="90" r="${r}" fill="none" stroke="var(--border)" stroke-width="14"/><circle cx="90" cy="90" r="${r}" fill="none" stroke="var(--${lv[1]==='ok'?'ok':lv[1]==='warn'?'warn':'err'})" stroke-width="14" stroke-linecap="round" stroke-dasharray="${c*v/100} ${c}" transform="rotate(-90 90 90)"/></svg><div class="n"><div><b>${v}%</b><div class="muted small">full right now</div></div></div></div>
+   <span class="pill ${lv[1]}" style="font-size:.95em;padding:6px 14px">${ic(lv[2],14)}${lv[0]} occupancy</span><p class="muted small">Around ${Math.round(v*1.2)} of 120 people · updated 16:05 · sample data</p></article>
+   <article class="card"><b>Estimated occupancy today</b><div class="chart" role="img" aria-label="Hourly occupancy chart, peak between 17:00 and 20:00">${bars}</div><div class="axis">${axis}</div><div class="legend" style="margin-top:10px"><span><i class="sw" style="background:var(--primary)"></i>Now</span><span><i class="sw" style="background:var(--warn-text)"></i>Peak hours</span><span><i class="sw" style="background:var(--primary-2);opacity:.55"></i>Typical</span></div></article>
+   <article class="list"><div class="li"><span class="tile">${ic('trophy',20)}</span><span class="grow"><b>Peak hours</b><br><span class="muted small">Weekdays 17:00 – 20:00</span></span></div>
+   <div class="li"><span class="tile">${ic('clock',20)}</span><span class="grow"><b>Opening hours</b><br><span class="muted small">Mon–Fri 07:00–22:00 · Sat 09:00–20:00 · Sun 09:00–14:00</span></span></div></article>`})},
+profile(){return scr({bg:'bg',hd:hdr('My Profile'),body:`<div class="center" style="display:flex;flex-direction:column;gap:6px"><div class="avatar" aria-hidden="true">${esc(S.acc.name.split(' ').map(w=>w[0]).join('').slice(0,2))}</div><h2 style="font-size:1.4em">${esc(S.acc.name)}</h2><p class="muted">maria.garcia@ufv.es</p></div>
+  ${summ([['Degree','Sports Science'],['Student ID','UFV-20481'],['Membership','Active · 2026/27']])}
+  <div class="list">${[['calcheck','My Reservations','myres'],['dumbbell','My Activities','myacts'],['settings','Account Settings','acc'],['access','Accessibility Settings','a11y']].map(([i,t,a])=>`<button class="li" data-a="go" data-v="${a}"><span class="tile">${ic(i,20)}</span><b class="grow">${t}</b><span class="muted">${ic('right')}</span></button>`).join('')}<button class="li danger" data-a="logout"><span class="tile">${ic('logout',20)}</span><b class="grow">Log Out</b></button></div>`})},
+myacts(){const L=S.res.filter(r=>r.kind==='activity');return scr({bg:'bg',hd:hdr('My Activities'),body:L.length?L.map(r=>`<article class="card"><div class="row"><span class="tile">${ic(r.ic,24)}</span><span class="grow"><b>${r.name}</b><br><span class="muted small">${fmt(r.date)} · ${r.time}</span></span>${badge(r.status)}</div></article>`).join('')+btn('s','Manage in My Reservations','go','myres'):`<p class="muted">You have not joined any activity yet.</p>`})},
+acc(){return scr({bg:'bg',hd:hdr('Account Settings'),body:`<div class="field"><label for="a-name">Full name</label><div class="inp">${ic('user')}<input id="a-name" value="${esc(S.acc.name)}"></div></div>
+  <div class="field"><label for="a-mail">University email</label><div class="inp">${ic('mail')}<input id="a-mail" value="maria.garcia@ufv.es" readonly></div></div>
+  <div class="field"><label for="a-tel">Phone</label><div class="inp">${ic('id')}<input id="a-tel" value="${esc(S.acc.phone)}"></div></div>
+  <div class="list"><button class="li" data-a="tog" data-v="notif" role="switch" aria-checked="${S.acc.notif}"><span class="tile">${ic('bell',18)}</span><span class="grow"><b>Booking reminders</b><br><span class="muted small">Notify me 2 hours before</span></span><span class="sw-t ${S.acc.notif?'on':''}"></span></button></div>`,ft:btn('p','Save Changes','saveacc')})},
+a11y(){const L=[['large','text','Larger text','Increase text size'],['contrast','sun','High contrast','Stronger borders and text'],['calm','motion','Reduce motion','Turn off animations']];
+  return scr({bg:'bg',hd:hdr('Accessibility'),body:`<div class="list">${L.map(([k,i,t,d])=>`<button class="li" data-a="a11y" data-v="${k}" role="switch" aria-checked="${S.a11y[k]}"><span class="tile">${ic(i,18)}</span><span class="grow"><b>${t}</b><br><span class="muted small">${d}</span></span><span class="sw-t ${S.a11y[k]?'on':''}"></span></button>`).join('')}</div>`})}
+};
+
+/* ---------- render & actions ---------- */
+let lastKey=null;
+function render(){
+  const key=S.stack[S.stack.length-1];
+  const old=$('.bd');const top=old&&key===lastKey?old.scrollTop:0;
+  $('#app').innerHTML=SCREENS[key]();
+  const bd=$('.bd');if(bd)bd.scrollTop=top;
+  if(key!==lastKey){const h=$('#app h1');if(h)h.focus({preventScroll:true})}
+  lastKey=key;
+  const ph=$('#phone');ph.classList.toggle('large',S.a11y.large);ph.classList.toggle('contrast',S.a11y.contrast);ph.classList.toggle('calm',S.a11y.calm);
+  const ov=$('#overlay');
+  if(S.overlay){const r=S.res.find(x=>x.id===S.overlay);ov.classList.add('show');
+    ov.innerHTML=`<div class="modal"><div class="big-ic" style="width:64px;height:64px;background:var(--err-tint);color:var(--err)">${ic('trash',30)}</div><h2 style="font-size:1.3em">Cancel this reservation?</h2><p class="muted">${r.name} · ${fmt(r.date)}, ${r.kind==='sport'?rng(r.time):r.time} · ${r.fac}. This action cannot be undone.</p>${btn('d','Yes, Cancel Reservation','cancelyes')}${btn('o','Keep Reservation','cancelno')}</div>`;
+    const f=ov.querySelector('button');f&&f.focus();
+  }else{ov.classList.remove('show');ov.innerHTML=''}
+}
+let tt;const toast=m=>{const t=$('#toast');t.innerHTML=`<div class="toast" role="status">${ic('check',20)}${m}</div>`;clearTimeout(tt);tt=setTimeout(()=>t.innerHTML='',2600)};
+const push=k=>{S.stack.push(k);render()};
+const here=()=>S.stack[S.stack.length-1];
+const stackTo=a=>{S.stack=a;S.overlay=null;render()};
+const addRes=r=>{S.res.push(r)};
+
+function act(a,v){
+  switch(a){
+  case'remember':S.remember=!S.remember;render();break;
+  case'demo':S.f={email:'maria.garcia@ufv.es',pass:'demo-password'};S.err='';render();break;
+  case'login':if(!S.f.email.trim()||!S.f.pass){S.err='Enter your UFV email and password to continue.';render();break}
+    if(!/@(alumnos\.)?ufv\.es$/i.test(S.f.email.trim())){S.err='Use your UFV email address, for example name@ufv.es.';render();break}
+    S.err='';S.user=true;stackTo(['home']);break;
+  case'go':push(v);break;
+  case'back':if(S.stack.length>1){S.stack.pop();render()}break;
+  case'home':stackTo(['home']);break;
+  case'toRes':stackTo(['home','menu','myres']);break;
+  case'sport':S.d={sport:v};S.m=0;push('fac');break;
+  case'fac':S.d.fac=v;S.d.date=null;S.d.time=null;push('date');break;
+  case'month':S.m=Math.min(1,Math.max(0,S.m+Number(v)));render();break;
+  case'pickdate':if(here()==='moddate'){S.mod.date=v;S.mod.time=null}else{S.d.date=v;S.d.time=null}render();break;
+  case'pickslot':if(here()==='modtime')S.mod.time=v;else S.d.time=v;render();break;
+  case'tovail':push('time');break;
+  case'review':push('review');break;
+  case'confirmbook':{const r={id:'r'+(S.nid++),kind:'sport',name:S.d.sport,ic:SPORTS[S.d.sport].ic,fac:S.d.fac,date:S.d.date,time:S.d.time,loc:S.d.fac+' · UFV Sports Center',status:'Confirmed'};addRes(r);S.last=r;push('bsuccess');break}
+  case'resdetail':S.sel=v;push('resdetail');break;
+  case'modify':S.mod={id:v,date:null,time:null};S.m=0;push('moddate');break;
+  case'modnext':push('modtime');break;
+  case'modconfirm':{const r=S.res.find(x=>x.id===S.mod.id);r.date=S.mod.date;if(r.kind==='sport')r.time=S.mod.time;else r.time=rng(S.mod.time);r.status='Confirmed';push('modsuccess');break}
+  case'cancelask':S.overlay=v;render();break;
+  case'cancelno':S.overlay=null;render();break;
+  case'cancelyes':S.res=S.res.filter(r=>r.id!==S.overlay);S.overlay=null;
+    while(here()!=='myres'&&S.stack.length>1)S.stack.pop();if(here()!=='myres')S.stack=['home','menu','myres'];
+    render();toast('Reservation cancelled successfully');break;
+  case'acts':push('acts');break;
+  case'actview':S.act=Number(v);S.sched=0;push('actdet');break;
+  case'actbook':push('actsched');break;
+  case'actopt':S.sched=Number(v);render();break;
+  case'actnext':push('actconf');break;
+  case'actconfirm':{const A=ACTS[S.act],o=A.opts[S.sched];S.spots[S.act]=Math.max(0,S.spots[S.act]-1);const r={id:'r'+(S.nid++),kind:'activity',name:A.n,ic:A.ic,fac:A.loc,date:nextMon(),time:o[1],loc:A.loc+' · UFV Sports Center',status:'Confirmed'};addRes(r);S.last=r;push('asuccess');break}
+  case'openqr':S.qr='ready';push('qr');break;
+  case'qrvalidate':S.qr='checking';render();setTimeout(()=>{if(S.qr==='checking'){S.qr='granted';render()}},1200);break;
+  case'qrnew':S.qr='ready';render();break;
+  case'tog':S.acc[v]=!S.acc[v];render();break;
+  case'a11y':S.a11y[v]=!S.a11y[v];render();break;
+  case'saveacc':{const n=$('#a-name').value.trim(),t=$('#a-tel').value.trim();if(n)S.acc.name=n;S.acc.phone=t;S.stack.pop();render();toast('Changes saved');break}
+  case'logout':S.user=false;S.f={email:S.remember?S.f.email:'',pass:''};stackTo(['login']);break;
+  case'resetproto':{const a=S.a11y;S=fresh();S.a11y=a;lastKey=null;render();break}
+  }
+}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t||t.disabled)return;act(t.dataset.a,t.dataset.v)});
+document.addEventListener('input',e=>{if(e.target.id==='email')S.f.email=e.target.value;if(e.target.id==='pass')S.f.pass=e.target.value});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&here()==='login'&&e.target.tagName==='INPUT')act('login');if(e.key==='Escape'&&S.overlay){S.overlay=null;render()}});
+
+/* ---------- prototype guide ---------- */
+const TASKS=[
+ ['T01','Access the gym using QR','CRITICAL',['home','qr'],()=>{S.qr='ready'}],
+ ['T02','Book a sports facility','CRITICAL',['home','menu']],
+ ['T03','View my reservations','CRITICAL',['home','menu','myres']],
+ ['T04','Modify or cancel a reservation','CRITICAL',['home','menu','myres']],
+ ['T05','Book a sports activity','CRITICAL',['home','menu','acts']],
+ ['T06','Check gym occupancy','IMPORTANT',['home','occ']],
+ ['T07','Log in','IMPORTANT',['login']],
+ ['T08','Manage personal profile','IMPORTANT',['home','profile']]
+];
+$('#tasks').innerHTML=TASKS.map((t,i)=>`<button class="t" data-task="${i}"><b>${t[0]}</b><span class="n">${t[1]}</span><span class="pill ${t[2]==='CRITICAL'?'err':'warn'}">${t[2]==='CRITICAL'?'Critical':'Important'}</span></button>`).join('');
+$('#tasks').addEventListener('click',e=>{const b=e.target.closest('[data-task]');if(!b)return;const t=TASKS[b.dataset.task];
+  if(t[0]==='T07'){S.user=false;S.f={email:'',pass:''};S.err=''}else S.user=true;
+  t[4]&&t[4]();S.m=0;stackTo([...t[3]])});
+const SIM=[['ready','QR ready'],['granted','Access granted'],['invalid','QR invalid'],['location','Location required'],['offline','Connection error']];
+$('#sim').innerHTML=SIM.map(([k,l])=>`<button class="chip" data-sim="${k}">${l}</button>`).join('');
+$('#sim').addEventListener('click',e=>{const b=e.target.closest('[data-sim]');if(!b)return;S.user=true;S.qr=b.dataset.sim;stackTo(['home','qr'])});
+render();
+</script>
+
+</body></html>
